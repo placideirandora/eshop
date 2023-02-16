@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {SelectList} from 'react-native-dropdown-select-list';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   SafeAreaView,
@@ -22,6 +23,22 @@ const {height} = Dimensions.get('window');
 type Props = NativeStackScreenProps<RootStackParamList, 'AddProduct'>;
 
 const AddProductScreen: React.FC<Props> = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+
+  const productCategories: string[] = [
+    'Electronics',
+    'Clothing',
+    'Beauty',
+    'Sports & Outdoors',
+    'Home & Kitchen',
+    'Toys & Games',
+  ];
+
+  useEffect(
+    () => console.log('SELECTED CATEGORY: ', selectedCategory),
+    [selectedCategory],
+  );
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -37,7 +54,11 @@ const AddProductScreen: React.FC<Props> = () => {
           <CustomTextInput placeholder="Short Description" />
           <CustomTextInput placeholder="Image (url)" />
           <CustomTextInput placeholder="Manufacturing Date" />
-          <CustomTextInput placeholder="Category (predefined)" />
+          <SelectList
+            setSelected={(category: string) => setSelectedCategory(category)}
+            data={productCategories}
+            placeholder="Select category"
+          />
           <TouchableOpacity style={styles.createButton}>
             <Text style={styles.createButtonText}>Create</Text>
           </TouchableOpacity>
