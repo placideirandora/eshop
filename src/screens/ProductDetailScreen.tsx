@@ -7,17 +7,36 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Share,
+  Alert,
 } from 'react-native';
 
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 import {RootStackParamList} from '../../types';
+import ShareButton from '../components/ShareButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'ProductDetail'>;
 
 const ProductDetailScreen: React.FC<Props> = ({route}) => {
   const {product} = route.params;
+
+  const onShare = async () => {
+    const productUrl = 'https://www.beatsbydre.com/earbuds/powerbeats-pro';
+    try {
+      const result = await Share.share({
+        message: productUrl,
+      });
+      if (result.action === Share.sharedAction) {
+        // shared
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
   return (
     <SafeAreaView style={styles.productDetailView}>
       <ScrollView>
@@ -34,6 +53,9 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
           </Text>
         </View>
       </ScrollView>
+      <View style={styles.shareButtonView}>
+        <ShareButton handlePressed={onShare} size="30" />
+      </View>
     </SafeAreaView>
   );
 };
@@ -66,6 +88,7 @@ const styles = StyleSheet.create({
   shortDescription: {
     fontSize: FontSize.medium,
     marginBottom: Spacing,
+    color: Colors.darkText,
   },
   category: {
     fontSize: FontSize.small,
@@ -74,6 +97,11 @@ const styles = StyleSheet.create({
   manufacturingDate: {
     fontSize: FontSize.small,
     marginBottom: Spacing,
+  },
+  shareButtonView: {
+    position: 'absolute',
+    bottom: 35,
+    right: 35,
   },
 });
 
