@@ -12,7 +12,18 @@ export type RootStackParamList = {
   SignUp: undefined;
   Home: undefined;
   AddProduct: undefined;
+  ProductDetail: {product: Product};
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
+
+export type Product = {
+  id: number;
+  title: string;
+  price: number;
+  shortDescription: string;
+  category: string;
+  image: string;
+  manufacturingDate: string;
+};

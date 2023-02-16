@@ -37,6 +37,7 @@ const AddProductScreen: React.FC<Props> = () => {
           <CustomTextInput placeholder="Short Description" />
           <CustomTextInput placeholder="Image (url)" />
           <CustomTextInput placeholder="Manufacturing Date" />
+          <CustomTextInput placeholder="Category (predefined)" />
           <TouchableOpacity style={styles.createButton}>
             <Text style={styles.createButtonText}>Create</Text>
           </TouchableOpacity>

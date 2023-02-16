@@ -1,19 +1,14 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  ImageBackground,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, View, Text, Dimensions, StyleSheet} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import {RootStackParamList} from '../../types';
-import FontSize from '../constants/FontSize';
+import FAB from '../components/FAB';
+import {dummyProducts} from '../data';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
-import FAB from '../components/FAB';
+import FontSize from '../constants/FontSize';
+import {RootStackParamList} from '../../types';
+import ProductList from '../components/ProductList';
 
 const {height} = Dimensions.get('window');
 
@@ -23,12 +18,8 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate}}) => {
   return (
     <SafeAreaView>
       <View style={styles.rootView}>
-        <ImageBackground
-          style={styles.backgroundImage}
-          source={require('../assets/eshop-banner.jpg')}
-          resizeMode="cover"
-        />
-        <Text style={styles.heading}>Welcome to the Store</Text>
+        <Text style={styles.heading}>Available Products</Text>
+        <ProductList products={dummyProducts} />
         <View style={styles.fabView}>
           <FAB navigate={navigate} screen="AddProduct" />
         </View>
