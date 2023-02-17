@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+
 import Colors from '../constants/Colors';
+import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 
 type Props = {
@@ -23,5 +25,6 @@ const styles = StyleSheet.create({
     color: Colors.danger,
     fontSize: FontSize.small,
     textAlign: 'left',
+    paddingLeft: Spacing * 2,
   },
 });

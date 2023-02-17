@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     borderRadius: Spacing,
   },
   signUpButtonText: {
-    fontSize: FontSize.large,
+    fontSize: FontSize.medium,
     textAlign: 'center',
     color: Colors.text,
   },
