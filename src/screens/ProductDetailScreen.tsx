@@ -43,11 +43,13 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
         <Image source={{uri: product.image}} style={styles.image} />
         <View style={styles.detailsContainer}>
           <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+          <View style={styles.priceCategoryView}>
+            <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+            <Text style={styles.category}>#{product.category}</Text>
+          </View>
           <Text style={styles.shortDescription}>
             {product.shortDescription}
           </Text>
-          <Text style={styles.category}>Category: {product.category}</Text>
           <Text style={styles.manufacturingDate}>
             Manufactured on: {product.manufacturingDate.split('T')[0]}
           </Text>
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 300,
     resizeMode: 'cover',
     marginBottom: Spacing * 2,
   },
@@ -93,6 +95,7 @@ const styles = StyleSheet.create({
   category: {
     fontSize: FontSize.small,
     marginBottom: Spacing,
+    paddingTop: Spacing - 5,
   },
   manufacturingDate: {
     fontSize: FontSize.small,
@@ -102,6 +105,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 35,
     right: 35,
+  },
+  priceCategoryView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
 
