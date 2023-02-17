@@ -23,7 +23,7 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
   const {product} = route.params;
 
   const onShare = async () => {
-    const productUrl = 'https://www.beatsbydre.com/earbuds/powerbeats-pro';
+    const productUrl = product.image;
     try {
       const result = await Share.share({
         message: productUrl,
@@ -49,7 +49,7 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
           </Text>
           <Text style={styles.category}>Category: {product.category}</Text>
           <Text style={styles.manufacturingDate}>
-            Manufactured on: {product.manufacturingDate}
+            Manufactured on: {product.manufacturingDate.split('T')[0]}
           </Text>
         </View>
       </ScrollView>

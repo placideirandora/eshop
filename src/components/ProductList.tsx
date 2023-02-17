@@ -10,16 +10,6 @@ type Props = {
 };
 
 const ProductList: React.FC<Props> = ({products}) => {
-  const sortedProducts = products.sort((a, b) => {
-    if (a.title < b.title) {
-      return -1;
-    }
-    if (a.title > b.title) {
-      return 1;
-    }
-    return 0;
-  });
-
   const renderProduct = ({item}: {item: Product}) => {
     return <ProductCard product={item} />;
   };
@@ -27,7 +17,7 @@ const ProductList: React.FC<Props> = ({products}) => {
   return (
     <FlatList
       style={{paddingHorizontal: Spacing * 3}}
-      data={sortedProducts}
+      data={products}
       renderItem={renderProduct}
       keyExtractor={item => item.id.toString()}
     />

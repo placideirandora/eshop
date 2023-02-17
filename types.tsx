@@ -18,12 +18,32 @@ export type RootStackParamList = {
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
+type ProductCategory =
+  | 'Electronics'
+  | 'Clothing'
+  | 'Beauty'
+  | 'Sports & Outdoors'
+  | 'Home & Kitchen'
+  | 'Toys & Games';
+
 export type Product = {
-  id: number;
+  id: string;
   title: string;
   price: number;
   shortDescription: string;
-  category: string;
+  category: ProductCategory;
   image: string;
   manufacturingDate: string;
+};
+
+type AccountType = 'client' | 'seller';
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  accountType: AccountType;
+  token: string;
 };
