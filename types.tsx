@@ -36,7 +36,7 @@ export type Product = {
   manufacturingDate: string;
 };
 
-type AccountType = 'client' | 'seller';
+export type AccountType = 'client' | 'seller' | undefined;
 
 export type User = {
   id: string;

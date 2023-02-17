@@ -18,7 +18,7 @@ import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 import ProductList from '../components/ProductList';
-import {RootStackParamList, Product} from '../../types';
+import {RootStackParamList, Product, AccountType} from '../../types';
 
 const {height} = Dimensions.get('window');
 
@@ -27,6 +27,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[]>([]);
+  const [accountType, setAccountType] = useState<AccountType>(undefined);
 
   const handleSignOut = async () => {
     try {
@@ -50,6 +51,11 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
   const fetchData = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
+      const accType = (await AsyncStorage.getItem(
+        'userAccountType',
+      )) as AccountType;
+      setAccountType(accType);
+      console.log(accountType);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -94,9 +100,11 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
         <Text style={styles.heading}>Available Products</Text>
         {loading && <ActivityIndicator size="small" color={Colors.primary} />}
         {!loading && <ProductList products={products} />}
-        <View style={styles.fabView}>
-          <FAB navigate={navigate} screen="AddProduct" />
-        </View>
+        {accountType && accountType === 'seller' && (
+          <View style={styles.fabView}>
+            <FAB navigate={navigate} screen="AddProduct" />
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
