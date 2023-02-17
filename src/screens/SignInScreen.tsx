@@ -103,7 +103,7 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
       await AsyncStorage.setItem('userToken', user.token);
       await AsyncStorage.setItem('userFirstName', user.firstName);
       await AsyncStorage.setItem('userLastName', user.lastName);
-      await AsyncStorage.setItem('userAccountType', user.accountType);
+      await AsyncStorage.setItem('userAccountType', user.accountType as string);
       navigate('Home');
     } catch (error) {
       console.log(error);

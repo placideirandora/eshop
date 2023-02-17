@@ -31,10 +31,7 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
 
   const handleSignOut = async () => {
     try {
-      await AsyncStorage.removeItem('userToken');
-      await AsyncStorage.removeItem('userFirstName');
-      await AsyncStorage.removeItem('userLastName');
-      await AsyncStorage.removeItem('userAccountType');
+      await AsyncStorage.clear();
       reset({
         index: 0,
         routes: [{name: 'SignIn'}],
@@ -55,7 +52,6 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
         'userAccountType',
       )) as AccountType;
       setAccountType(accType);
-      console.log(accountType);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,7 +84,7 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
     <SafeAreaView>
       <View style={styles.rootView}>
         <View style={styles.signOutButtonView}>
-          <TouchableOpacity onPress={handleSignOut}>
+          <TouchableOpacity onPress={() => handleSignOut()}>
             <Text
               style={{
                 color: Colors.danger,

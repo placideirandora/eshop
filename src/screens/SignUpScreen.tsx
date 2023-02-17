@@ -194,7 +194,6 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
       } else {
         message = 'Could not register you';
       }
-      console.log(error.response.data);
       Toast.show({
         type: 'error',
         text1: message,
