@@ -7,6 +7,7 @@ declare global {
 }
 
 export type RootStackParamList = {
+  Splash: undefined;
   OnBoarding: undefined;
   SignIn: undefined;
   SignUp: undefined;

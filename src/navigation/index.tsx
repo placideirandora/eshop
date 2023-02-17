@@ -6,6 +6,7 @@ import Colors from '../constants/Colors';
 import {RootStackParamList} from '../../types';
 
 import HomeScreen from '../screens/HomeScreen';
+import SplashScreen from '../screens/SplashScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import OnBoardingScreen from '../screens/OnBoardingScreen';
@@ -29,6 +30,7 @@ export const Navigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
         <Stack.Screen name="SignIn" component={SignInScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />

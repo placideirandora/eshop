@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.medium,
     fontWeight: 'bold',
     margin: Spacing * 1.2,
+    color: Colors.primary,
   },
   price: {
     fontSize: FontSize.small,
