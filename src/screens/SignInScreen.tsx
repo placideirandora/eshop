@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -181,9 +182,12 @@ const styles = StyleSheet.create({
     fontSize: FontSize.xxLarge,
     color: Colors.primary,
     marginVertical: Spacing * 3,
+    textTransform: 'uppercase',
+    fontFamily: Fonts.semiBoldMontSerrat,
   },
   message: {
     fontSize: FontSize.large,
+    fontFamily: Fonts.mediumMontSerrat,
   },
   form: {
     marginVertical: Spacing * 3,
@@ -209,6 +213,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.large,
     textAlign: 'center',
     color: Colors.onPrimary,
+    fontFamily: Fonts.regularMontSerrat,
   },
   signUpButton: {
     paddingVertical: Spacing * 1.5,
@@ -219,5 +224,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.medium,
     textAlign: 'center',
     color: Colors.text,
+    fontFamily: Fonts.regularMontSerrat,
   },
 });

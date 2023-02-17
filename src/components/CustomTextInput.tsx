@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
     borderRadius: Spacing,
     width: '90%',
     marginVertical: Spacing,
+    fontFamily: Fonts.regularMontSerrat,
   },
   textInputFocused: {
     borderWidth: 2,

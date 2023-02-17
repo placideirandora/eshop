@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -77,29 +78,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing * 2,
   },
   title: {
-    fontSize: FontSize.xxLarge,
-    fontWeight: 'bold',
+    fontSize: FontSize.xLarge,
     marginBottom: Spacing,
     color: Colors.primary,
+    fontFamily: Fonts.semiBoldMontSerrat,
   },
   price: {
     fontSize: FontSize.large,
-    fontWeight: 'bold',
     marginBottom: Spacing,
+    fontFamily: Fonts.mediumMontSerrat,
   },
   shortDescription: {
     fontSize: FontSize.medium,
     marginBottom: Spacing,
     color: Colors.darkText,
+    fontFamily: Fonts.regularMontSerrat,
   },
   category: {
     fontSize: FontSize.small,
     marginBottom: Spacing,
     paddingTop: Spacing - 5,
+    fontFamily: Fonts.mediumMontSerrat,
   },
   manufacturingDate: {
     fontSize: FontSize.small,
     marginBottom: Spacing,
+    fontFamily: Fonts.mediumMontSerrat,
   },
   shareButtonView: {
     position: 'absolute',

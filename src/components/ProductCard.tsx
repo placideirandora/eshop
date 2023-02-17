@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {Product} from '../../types';
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -51,14 +52,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.medium,
-    fontWeight: 'bold',
     margin: Spacing * 1.2,
-    color: Colors.primary,
+    fontFamily: Fonts.semiBoldMontSerrat,
   },
   price: {
     fontSize: FontSize.small,
     marginHorizontal: Spacing * 1.2,
     paddingBottom: Spacing,
+    fontFamily: Fonts.regularMontSerrat,
   },
   priceCategoryView: {
     display: 'flex',

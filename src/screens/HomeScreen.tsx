@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import FAB from '../components/FAB';
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -85,12 +86,7 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
       <View style={styles.rootView}>
         <View style={styles.signOutButtonView}>
           <TouchableOpacity onPress={() => handleSignOut()}>
-            <Text
-              style={{
-                color: Colors.danger,
-              }}>
-              Sign Out
-            </Text>
+            <Text style={styles.signOutButtonText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.heading}>Available Products</Text>
@@ -116,6 +112,7 @@ const styles = StyleSheet.create({
     marginVertical: Spacing * 3,
     textTransform: 'uppercase',
     textAlign: 'center',
+    fontFamily: Fonts.boldMontSerrat,
   },
   rootView: {
     height: '100%',
@@ -129,5 +126,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingRight: Spacing * 2.5,
     paddingTop: Spacing * 2.5,
+  },
+  signOutButtonText: {
+    color: Colors.danger,
+    fontFamily: Fonts.mediumMontSerrat,
+    fontSize: FontSize.medium,
   },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -26,5 +27,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     textAlign: 'left',
     paddingLeft: Spacing * 2,
+    fontFamily: Fonts.regularMontSerrat,
   },
 });
