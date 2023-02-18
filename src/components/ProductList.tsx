@@ -2,8 +2,8 @@ import React from 'react';
 import {FlatList} from 'react-native';
 
 import {Product} from '../../types';
-import Spacing from '../constants/Spacing';
 import ProductCard from './ProductCard';
+import Spacing from '../constants/Spacing';
 
 type Props = {
   products: Product[];

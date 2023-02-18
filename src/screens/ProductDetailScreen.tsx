@@ -63,6 +63,8 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
   );
 };
 
+export default ProductDetailScreen;
+
 const styles = StyleSheet.create({
   productDetailView: {
     flex: 1,
@@ -115,5 +117,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
-
-export default ProductDetailScreen;

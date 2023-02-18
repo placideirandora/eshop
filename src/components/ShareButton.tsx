@@ -9,7 +9,7 @@ type Props = {
   size: string;
 };
 
-const FAB: React.FC<Props> = ({handlePressed, size}) => {
+const ShareButton: React.FC<Props> = ({handlePressed, size}) => {
   return (
     <TouchableOpacity style={styles.button} onPress={() => handlePressed()}>
       <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -31,6 +31,8 @@ const FAB: React.FC<Props> = ({handlePressed, size}) => {
   );
 };
 
+export default ShareButton;
+
 const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.darkText,
@@ -41,5 +43,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default FAB;

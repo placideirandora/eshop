@@ -252,14 +252,14 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
           {!loading && (
             <>
               <TouchableOpacity
-                style={styles.signInButton}
+                style={styles.signUpButton}
                 onPress={() => validateFields()}>
-                <Text style={styles.signInButtonText}>Create Account</Text>
+                <Text style={styles.signUpButtonText}>Create Account</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={styles.signUpButton}
+                style={styles.signInButton}
                 onPress={() => navigate('SignIn')}>
-                <Text style={styles.signUpButtonText}>
+                <Text style={styles.signInButtonText}>
                   Already have an account? Sign In
                 </Text>
               </TouchableOpacity>
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     marginVertical: Spacing * 3,
     alignItems: 'center',
   },
-  signInButton: {
+  signUpButton: {
     color: Colors.primary,
     backgroundColor: Colors.primary,
     paddingVertical: Spacing * 1.5,
@@ -311,18 +311,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: Spacing,
   },
-  signInButtonText: {
+  signUpButtonText: {
     fontSize: FontSize.large,
     textAlign: 'center',
     color: Colors.onPrimary,
     fontFamily: Fonts.regularMontSerrat,
   },
-  signUpButton: {
+  signInButton: {
     paddingVertical: Spacing * 1.5,
     paddingHorizontal: Spacing * 2,
     borderRadius: Spacing,
   },
-  signUpButtonText: {
+  signInButtonText: {
     fontSize: FontSize.medium,
     textAlign: 'center',
     color: Colors.text,

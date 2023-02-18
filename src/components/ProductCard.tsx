@@ -30,6 +30,8 @@ const ProductCard: React.FC<Props> = ({product}) => {
   );
 };
 
+export default ProductCard;
+
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.onPrimary,
@@ -67,5 +69,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 });
-
-export default ProductCard;

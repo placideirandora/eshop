@@ -28,7 +28,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [products, setProducts] = useState<Product[]>([]);
-  const [accountType, setAccountType] = useState<AccountType>(undefined);
+  const [accountType, setAccountType] = useState<AccountType>(null);
 
   const handleSignOut = async () => {
     try {

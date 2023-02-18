@@ -36,7 +36,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
   const [shortDescription, setShortDescription] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [manufacturingDate, setManufactoringDate] = useState<string>('');
-  const [category, setCategory] = useState<ProductCategory>(undefined);
+  const [category, setCategory] = useState<ProductCategory>(null);
 
   const [shouldDisplayErrorMessage, setShouldDisplayErrorMessage] =
     useState<boolean>(false);

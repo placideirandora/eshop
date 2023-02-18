@@ -26,7 +26,7 @@ export type ProductCategory =
   | 'Sports & Outdoors'
   | 'Home & Kitchen'
   | 'Toys & Games'
-  | undefined;
+  | null;
 
 export type Product = {
   id: string;
@@ -38,7 +38,7 @@ export type Product = {
   manufacturingDate: string;
 };
 
-export type AccountType = 'client' | 'seller' | undefined;
+export type AccountType = 'client' | 'seller' | null;
 
 export type User = {
   id: string;
