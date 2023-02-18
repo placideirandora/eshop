@@ -28,39 +28,39 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [shouldDisplayMessage, setShouldDisplayMessage] =
+  const [shouldDisplayErrorMessage, setShouldDisplayErrorMessage] =
     useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>('');
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>('');
 
   const validateFields = () => {
-    let emailError: string = '';
-    let passwordError: string = '';
+    const fieldsToValidate = [
+      {
+        value: email,
+        errorMessageSetter: setEmailErrorMessage,
+        errorMessage: 'Email is required',
+      },
+      {
+        value: password,
+        errorMessageSetter: setPasswordErrorMessage,
+        errorMessage: 'Password is required',
+      },
+    ];
 
-    if (!email) {
-      emailError = 'Email is required';
-    } else {
-      emailError = '';
-    }
+    let shouldDisplayMessage = false;
 
-    if (!password) {
-      passwordError = 'Password is required';
-    } else {
-      passwordError = '';
-    }
+    fieldsToValidate.forEach(({value, errorMessageSetter, errorMessage}) => {
+      if (!value) {
+        errorMessageSetter(errorMessage);
+        shouldDisplayMessage = true;
+      } else {
+        errorMessageSetter('');
+      }
+    });
 
-    if (emailError) {
-      setEmailErrorMessage(emailError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setEmailErrorMessage('');
-    }
-
-    if (passwordError) {
-      setPasswordErrorMessage(passwordError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setPasswordErrorMessage('');
+    if (shouldDisplayMessage) {
+      setShouldDisplayErrorMessage(true);
+      return;
     }
 
     authenticateUser();
@@ -129,7 +129,7 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
           value={email}
           onChangeText={value => setEmail(value.toLowerCase())}
         />
-        {shouldDisplayMessage && emailErrorMessage && (
+        {shouldDisplayErrorMessage && emailErrorMessage && (
           <MissingFieldAlert width="90%" message={emailErrorMessage} />
         )}
         <CustomTextInput
@@ -138,7 +138,7 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
           value={password}
           onChangeText={value => setPassword(value)}
         />
-        {shouldDisplayMessage && passwordErrorMessage && (
+        {shouldDisplayErrorMessage && passwordErrorMessage && (
           <MissingFieldAlert width="90%" message={passwordErrorMessage} />
         )}
         {loading && (

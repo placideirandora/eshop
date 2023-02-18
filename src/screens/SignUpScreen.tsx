@@ -49,7 +49,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
 
-  const [shouldDisplayMessage, setShouldDisplayMessage] =
+  const [shouldDisplayErrorMessage, setShouldDisplayErrorMessage] =
     useState<boolean>(false);
   const [firstNameErrorMessage, setFirstNameErrorMessage] =
     useState<string>('');
@@ -64,53 +64,60 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
   const validateFields = () => {
     const emailRegex: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
 
-    let firstNameError: string = '';
-    let lastNameError: string = '';
-    let emailError: string = '';
-    let passwordError: string = '';
-    let confirmPasswordError: string = '';
-    let accountTypeError: string = '';
+    const fieldsToValidate = [
+      {
+        value: firstName,
+        errorMessageSetter: setFirstNameErrorMessage,
+        errorMessage: 'First name is required',
+      },
+      {
+        value: lastName,
+        errorMessageSetter: setLastNameErrorMessage,
+        errorMessage: 'Last name is required',
+      },
+      {
+        value: email,
+        errorMessageSetter: setEmailErrorMessage,
+        errorMessage: 'Email is required',
+      },
+      {
+        value: password,
+        errorMessageSetter: setPasswordErrorMessage,
+        errorMessage: 'Password is required',
+      },
+      {
+        value: confirmPassword,
+        errorMessageSetter: setConfirmPasswordErrorMessage,
+        errorMessage: 'Confirm Password is required',
+      },
+    ];
 
-    if (!firstName) {
-      firstNameError = 'First name is required';
-    } else {
-      firstNameError = '';
-    }
+    let shouldDisplayMessage = false;
 
-    if (!lastName) {
-      lastNameError = 'Last name is required';
-    } else {
-      lastNameError = '';
-    }
-
-    if (!email) {
-      emailError = 'Email is required';
-    } else {
-      emailError = '';
-    }
-
-    if (!password) {
-      passwordError = 'Password is required';
-    } else {
-      passwordError = '';
-    }
-
-    if (!confirmPassword) {
-      confirmPasswordError = 'Confirm Password is required';
-    } else {
-      confirmPasswordError = '';
-    }
+    fieldsToValidate.forEach(({value, errorMessageSetter, errorMessage}) => {
+      if (!value) {
+        errorMessageSetter(errorMessage);
+        shouldDisplayMessage = true;
+      } else {
+        errorMessageSetter('');
+      }
+    });
 
     if (email && !email.match(emailRegex)) {
-      emailError = 'Invalid email';
+      setEmailErrorMessage('Invalid email');
+      shouldDisplayMessage = true;
     }
 
     if (password && password.length < 6) {
-      passwordError = 'Password must contain at least 6 characters';
+      setPasswordErrorMessage('Password must contain at least 6 characters');
+      shouldDisplayMessage = true;
     }
 
     if (confirmPassword && password !== confirmPassword) {
-      confirmPasswordError = 'This password does not match the above one';
+      setConfirmPasswordErrorMessage(
+        'This password does not match the above one',
+      );
+      shouldDisplayMessage = true;
     }
 
     const accountTypeNotSelected = accountType.every(acc => {
@@ -118,51 +125,15 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
     });
 
     if (accountTypeNotSelected) {
-      accountTypeError = 'Account type is required';
-    } else {
-      accountTypeError = '';
-    }
-
-    if (firstNameError) {
-      setFirstNameErrorMessage(firstNameError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setFirstNameErrorMessage('');
-    }
-
-    if (lastNameError) {
-      setLastNameErrorMessage(lastNameError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setLastNameErrorMessage('');
-    }
-
-    if (emailError) {
-      setEmailErrorMessage(emailError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setEmailErrorMessage('');
-    }
-
-    if (passwordError) {
-      setPasswordErrorMessage(passwordError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setPasswordErrorMessage('');
-    }
-
-    if (confirmPasswordError) {
-      setConfirmPasswordErrorMessage(confirmPasswordError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setConfirmPasswordErrorMessage('');
-    }
-
-    if (accountTypeError) {
-      setAccountTypeErrorMessage(accountTypeError);
-      return setShouldDisplayMessage(true);
+      setAccountTypeErrorMessage('Account type is required');
+      shouldDisplayMessage = true;
     } else {
       setAccountTypeErrorMessage('');
+    }
+
+    if (shouldDisplayMessage) {
+      setShouldDisplayErrorMessage(true);
+      return;
     }
 
     registerUser();
@@ -221,7 +192,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
             value={firstName}
             onChangeText={value => setFirstName(value)}
           />
-          {shouldDisplayMessage && firstNameErrorMessage && (
+          {shouldDisplayErrorMessage && firstNameErrorMessage && (
             <MissingFieldAlert width="90%" message={firstNameErrorMessage} />
           )}
           <CustomTextInput
@@ -229,7 +200,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
             value={lastName}
             onChangeText={value => setLastName(value)}
           />
-          {shouldDisplayMessage && lastNameErrorMessage && (
+          {shouldDisplayErrorMessage && lastNameErrorMessage && (
             <MissingFieldAlert width="90%" message={lastNameErrorMessage} />
           )}
           <CustomTextInput
@@ -237,7 +208,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
             value={email}
             onChangeText={value => setEmail(value.toLowerCase())}
           />
-          {shouldDisplayMessage && emailErrorMessage && (
+          {shouldDisplayErrorMessage && emailErrorMessage && (
             <MissingFieldAlert width="90%" message={emailErrorMessage} />
           )}
           <CustomTextInput
@@ -246,7 +217,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
             value={password}
             onChangeText={value => setPassword(value)}
           />
-          {shouldDisplayMessage && passwordErrorMessage && (
+          {shouldDisplayErrorMessage && passwordErrorMessage && (
             <MissingFieldAlert width="90%" message={passwordErrorMessage} />
           )}
           <CustomTextInput
@@ -255,7 +226,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
             value={confirmPassword}
             onChangeText={value => setConfirmPassword(value)}
           />
-          {shouldDisplayMessage && confirmPasswordErrorMessage && (
+          {shouldDisplayErrorMessage && confirmPasswordErrorMessage && (
             <MissingFieldAlert
               width="90%"
               message={confirmPasswordErrorMessage}
@@ -268,7 +239,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
               onPress={value => setAccountType(value)}
             />
           </View>
-          {shouldDisplayMessage && accountTypeErrorMessage && (
+          {shouldDisplayErrorMessage && accountTypeErrorMessage && (
             <MissingFieldAlert width="90%" message={accountTypeErrorMessage} />
           )}
           {loading && (

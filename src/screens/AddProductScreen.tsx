@@ -16,9 +16,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import FontSize from '../constants/FontSize';
+import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
+import FontSize from '../constants/FontSize';
 import CustomTextInput from '../components/CustomTextInput';
 import MissingFieldAlert from '../components/FieldErrorAlert';
 import {ProductCategory, RootStackParamList} from '../../types';
@@ -37,7 +38,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
   const [manufacturingDate, setManufactoringDate] = useState<string>('');
   const [category, setCategory] = useState<ProductCategory>(undefined);
 
-  const [shouldDisplayMessage, setShouldDisplayMessage] =
+  const [shouldDisplayErrorMessage, setShouldDisplayErrorMessage] =
     useState<boolean>(false);
   const [nameErrorMessage, setNameErrorMessage] = useState<string>('');
   const [priceErrorMessage, setPriceErrorMessage] = useState<string>('');
@@ -57,89 +58,53 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
   ];
 
   const validateFields = () => {
-    let nameError: string = '';
-    let priceError: string = '';
-    let shortDescError: string = '';
-    let imageError: string = '';
-    let manufacDateError: string = '';
-    let categoryError: string = '';
+    const fieldsToValidate = [
+      {
+        value: name,
+        errorMessageSetter: setNameErrorMessage,
+        errorMessage: 'Name is required',
+      },
+      {
+        value: price,
+        errorMessageSetter: setPriceErrorMessage,
+        errorMessage: 'Price is required',
+      },
+      {
+        value: shortDescription,
+        errorMessageSetter: setShortDescErrorMessage,
+        errorMessage: 'Short description is required',
+      },
+      {
+        value: image,
+        errorMessageSetter: setImageErrorMessage,
+        errorMessage: 'Image is required',
+      },
+      {
+        value: manufacturingDate,
+        errorMessageSetter: setManufacErrorMessage,
+        errorMessage: 'Manufactoring date is required',
+      },
+      {
+        value: category,
+        errorMessageSetter: setCategErrorMessage,
+        errorMessage: 'Category is required',
+      },
+    ];
 
-    if (!name) {
-      nameError = 'Name is required';
-    } else {
-      nameError = '';
-    }
+    let shouldDisplayMessage = false;
 
-    if (!price) {
-      priceError = 'Price is required';
-    } else {
-      priceError = '';
-    }
+    fieldsToValidate.forEach(({value, errorMessageSetter, errorMessage}) => {
+      if (!value) {
+        errorMessageSetter(errorMessage);
+        shouldDisplayMessage = true;
+      } else {
+        errorMessageSetter('');
+      }
+    });
 
-    if (!shortDescription) {
-      shortDescError = 'Short description is required';
-    } else {
-      shortDescError = '';
-    }
-
-    if (!image) {
-      imageError = 'Image url is required';
-    } else {
-      imageError = '';
-    }
-
-    if (!manufacturingDate) {
-      manufacDateError = 'Manufacturing date is required';
-    } else {
-      manufacDateError = '';
-    }
-
-    if (!category) {
-      categoryError = 'Category is required';
-    } else {
-      categoryError = '';
-    }
-
-    if (nameError) {
-      setNameErrorMessage(nameError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setNameErrorMessage('');
-    }
-
-    if (priceError) {
-      setPriceErrorMessage(priceError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setPriceErrorMessage('');
-    }
-
-    if (shortDescError) {
-      setShortDescErrorMessage(shortDescError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setShortDescErrorMessage('');
-    }
-
-    if (imageError) {
-      setImageErrorMessage(imageError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setImageErrorMessage('');
-    }
-
-    if (manufacDateError) {
-      setManufacErrorMessage(manufacDateError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setManufacErrorMessage('');
-    }
-
-    if (categoryError) {
-      setCategErrorMessage(categoryError);
-      return setShouldDisplayMessage(true);
-    } else {
-      setCategErrorMessage('');
+    if (shouldDisplayMessage) {
+      setShouldDisplayErrorMessage(true);
+      return;
     }
 
     uploadProduct();
@@ -203,7 +168,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             value={name}
             onChangeText={value => setName(value)}
           />
-          {shouldDisplayMessage && nameErrorMessage && (
+          {shouldDisplayErrorMessage && nameErrorMessage && (
             <MissingFieldAlert width="90%" message={nameErrorMessage} />
           )}
           <CustomTextInput
@@ -211,7 +176,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             value={price}
             onChangeText={value => setPrice(value)}
           />
-          {shouldDisplayMessage && priceErrorMessage && (
+          {shouldDisplayErrorMessage && priceErrorMessage && (
             <MissingFieldAlert width="90%" message={priceErrorMessage} />
           )}
           <CustomTextInput
@@ -219,7 +184,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             value={shortDescription}
             onChangeText={value => setShortDescription(value)}
           />
-          {shouldDisplayMessage && shortDescErrorMessage && (
+          {shouldDisplayErrorMessage && shortDescErrorMessage && (
             <MissingFieldAlert width="90%" message={shortDescErrorMessage} />
           )}
           <CustomTextInput
@@ -227,7 +192,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             value={image}
             onChangeText={value => setImage(value)}
           />
-          {shouldDisplayMessage && imageErrorMessage && (
+          {shouldDisplayErrorMessage && imageErrorMessage && (
             <MissingFieldAlert width="90%" message={imageErrorMessage} />
           )}
           <CustomTextInput
@@ -235,15 +200,18 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             value={manufacturingDate}
             onChangeText={value => setManufactoringDate(value)}
           />
-          {shouldDisplayMessage && manufacErrorMessage && (
+          {shouldDisplayErrorMessage && manufacErrorMessage && (
             <MissingFieldAlert width="90%" message={manufacErrorMessage} />
           )}
           <SelectList
             setSelected={(value: ProductCategory) => setCategory(value)}
             data={productCategories}
             placeholder="Select category"
+            boxStyles={styles.boxStyles}
+            inputStyles={styles.inputStyles}
+            dropdownTextStyles={styles.dropDownTextStyles}
           />
-          {shouldDisplayMessage && categErrorMessage && (
+          {shouldDisplayErrorMessage && categErrorMessage && (
             <MissingFieldAlert width="90%" message={categErrorMessage} />
           )}
           {loading && (
@@ -302,4 +270,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.onPrimary,
   },
+  dropDownTextStyles: {
+    fontFamily: Fonts.regularMontSerrat,
+  },
+  boxStyles: {marginVertical: Spacing, width: '86.5%'},
+  inputStyles: {width: '90%', fontFamily: Fonts.regularMontSerrat},
 });
