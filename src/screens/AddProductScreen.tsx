@@ -225,8 +225,9 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
           {!loading && (
             <PrimaryButton
               title="Create"
-              handlePress={validateFields}
               width="90%"
+              backgroundColor={Colors.primary}
+              handlePress={validateFields}
             />
           )}
         </View>

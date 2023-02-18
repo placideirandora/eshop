@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
@@ -27,7 +27,11 @@ const {height} = Dimensions.get('window');
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [token, setToken] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [accountType, setAccountType] = useState<AccountType>(null);
 
@@ -47,40 +51,62 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
     }
   };
 
-  const fetchData = async () => {
+  const fetchMoreProducts = async () => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
-      const accType = (await AsyncStorage.getItem(
-        'userAccountType',
-      )) as AccountType;
-      setAccountType(accType);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const url = `${apiBaseUrl}/product`;
-      const res = await axios.get(url, config);
-      setProducts(res.data.data.products);
-      setLoading(false);
-    } catch (error: any) {
-      setLoading(false);
-      let message;
-      if (error.response.data) {
-        message = error.response.data.message;
-      } else {
-        message = 'Could not fetch the products';
-      }
-      Toast.show({
-        type: 'error',
-        text1: message,
-      });
+      setLoadingMore(true);
+      const nextPage = page + 1;
+      const data = await fetchProducts(nextPage, token);
+      setTotalPages(data.totalPages);
+      setProducts(prevProducts => [...prevProducts, ...data.products]);
+      setPage(nextPage);
+    } catch (error) {
+      handleFetchError(error);
     }
   };
 
+  const fetchProducts = async (targetPage: number, bToken: string) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${bToken}`,
+      },
+    };
+    const url = `${apiBaseUrl}/product?page=${targetPage}`;
+    const response = await axios.get(url, config);
+    return response.data.data;
+  };
+
+  const handleFetchError = (error: any) => {
+    let message;
+    if (error.response?.data) {
+      message = error.response.data.message;
+    } else {
+      message = 'Could not fetch products';
+    }
+    Toast.show({
+      type: 'error',
+      text1: message,
+    });
+  };
+
+  const fetchInitialData = useCallback(async () => {
+    try {
+      const bearerToken = await AsyncStorage.getItem('userToken');
+      const accType = await AsyncStorage.getItem('userAccountType');
+      setAccountType(accType as AccountType);
+      setToken(bearerToken as string);
+      const data = await fetchProducts(1, bearerToken as string);
+      setTotalPages(data.totalPages);
+      setProducts(data.products);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      handleFetchError(error);
+    }
+  }, [setAccountType, setToken, setTotalPages, setProducts, setLoading]);
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchInitialData();
+  }, [fetchInitialData]);
 
   return (
     <SafeAreaView>
@@ -91,8 +117,16 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
           </TouchableOpacity>
         </View>
         <Text style={styles.heading}>Available Products</Text>
+        {!loading && (
+          <ProductList
+            products={products}
+            handleLoadMore={fetchMoreProducts}
+            totalPages={totalPages}
+            currentPage={page}
+            loadingMore={loadingMore}
+          />
+        )}
         {loading && <ActivityIndicator size="small" color={Colors.primary} />}
-        {!loading && <ProductList products={products} />}
         {accountType && accountType === 'seller' && (
           <View style={styles.fabView}>
             <FAB navigate={navigate} screen="AddProduct" />

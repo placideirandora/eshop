@@ -154,6 +154,7 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             <PrimaryButton
               title="Sign In"
               width="90%"
+              backgroundColor={Colors.primary}
               handlePress={validateFields}
             />
             <SecondaryButton

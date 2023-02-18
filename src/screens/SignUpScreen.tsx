@@ -256,6 +256,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
               <PrimaryButton
                 title="Create Account"
                 width="90%"
+                backgroundColor={Colors.primary}
                 handlePress={validateFields}
               />
               <SecondaryButton
