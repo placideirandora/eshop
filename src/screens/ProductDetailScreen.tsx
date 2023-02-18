@@ -43,7 +43,7 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
       <ScrollView>
         <Image source={{uri: product.image}} style={styles.image} />
         <View style={styles.detailsContainer}>
-          <Text style={styles.title}>{product.title}</Text>
+          <Text style={styles.name}>{product.name}</Text>
           <View style={styles.priceCategoryView}>
             <Text style={styles.price}>${product.price.toFixed(2)}</Text>
             <Text style={styles.category}>#{product.category}</Text>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     paddingHorizontal: Spacing * 2,
   },
-  title: {
+  name: {
     fontSize: FontSize.xLarge,
     marginBottom: Spacing,
     color: Colors.primary,

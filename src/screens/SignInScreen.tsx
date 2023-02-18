@@ -15,6 +15,7 @@ import {
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
+import {apiBaseUrl} from '../constants/Api';
 import FontSize from '../constants/FontSize';
 import {RootStackParamList, User} from '../../types';
 import CustomTextInput from '../components/CustomTextInput';
@@ -70,7 +71,7 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
     try {
       setLoading(true);
 
-      const url = 'https://eshop-backend-4jkp.onrender.com/api/v1/auth/signin';
+      const url = `${apiBaseUrl}/auth/signin`;
       const payload = {
         email,
         password,
@@ -101,9 +102,8 @@ const SignInScreen: React.FC<Props> = ({navigation: {navigate}}) => {
 
   const saveUserInfo = async (user: User) => {
     try {
+      await AsyncStorage.setItem('userId', user.id);
       await AsyncStorage.setItem('userToken', user.token);
-      await AsyncStorage.setItem('userFirstName', user.firstName);
-      await AsyncStorage.setItem('userLastName', user.lastName);
       await AsyncStorage.setItem('userAccountType', user.accountType as string);
       navigate('Home');
     } catch (error) {

@@ -21,7 +21,7 @@ const ProductCard: React.FC<Props> = ({product}) => {
   return (
     <TouchableOpacity style={styles.card} onPress={handleProductPress}>
       <Image source={{uri: product.image}} style={styles.image} />
-      <Text style={styles.title}>{product.title}</Text>
+      <Text style={styles.name}>{product.name}</Text>
       <View style={styles.priceCategoryView}>
         <Text style={styles.price}>${product.price}</Text>
         <Text style={styles.price}>#{product.category}</Text>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     height: 200,
     width: '100%',
   },
-  title: {
+  name: {
     fontSize: FontSize.medium,
     margin: Spacing * 1.2,
     fontFamily: Fonts.semiBoldMontSerrat,

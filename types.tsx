@@ -30,7 +30,7 @@ export type ProductCategory =
 
 export type Product = {
   id: string;
-  title: string;
+  name: string;
   price: number;
   shortDescription: string;
   category: ProductCategory;

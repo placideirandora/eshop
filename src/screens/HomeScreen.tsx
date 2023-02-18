@@ -17,6 +17,7 @@ import FAB from '../components/FAB';
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
+import {apiBaseUrl} from '../constants/Api';
 import FontSize from '../constants/FontSize';
 import ProductList from '../components/ProductList';
 import {RootStackParamList, Product, AccountType} from '../../types';
@@ -58,7 +59,7 @@ const HomeScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const url = 'https://eshop-backend-4jkp.onrender.com/api/v1/product';
+      const url = `${apiBaseUrl}/product`;
       const res = await axios.get(url, config);
       setProducts(res.data.data.products);
       setLoading(false);

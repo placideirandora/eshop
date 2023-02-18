@@ -16,6 +16,7 @@ import {
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
+import {apiBaseUrl} from '../constants/Api';
 import FontSize from '../constants/FontSize';
 import {RootStackParamList} from '../../types';
 import CustomTextInput from '../components/CustomTextInput';
@@ -142,7 +143,7 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
   const registerUser = async () => {
     try {
       setLoading(true);
-      const url = 'https://eshop-backend-4jkp.onrender.com/api/v1/auth/signup';
+      const url = `${apiBaseUrl}/auth/signup`;
       const payload = {
         firstName,
         lastName,

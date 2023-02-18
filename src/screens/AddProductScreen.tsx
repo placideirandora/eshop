@@ -20,6 +20,7 @@ import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
+import {apiBaseUrl} from '../constants/Api';
 import CustomTextInput from '../components/CustomTextInput';
 import MissingFieldAlert from '../components/FieldErrorAlert';
 import {ProductCategory, RootStackParamList} from '../../types';
@@ -120,9 +121,9 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const url = 'https://eshop-backend-4jkp.onrender.com/api/v1/product/add';
+      const url = `${apiBaseUrl}/product/add`;
       const payload = {
-        title: name,
+        name,
         price: parseFloat(price),
         shortDescription,
         image,
