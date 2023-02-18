@@ -211,6 +211,7 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             boxStyles={styles.boxStyles}
             inputStyles={styles.inputStyles}
             dropdownTextStyles={styles.dropDownTextStyles}
+            search={false}
           />
           {shouldDisplayErrorMessage && categErrorMessage && (
             <MissingFieldAlert width="90%" message={categErrorMessage} />
