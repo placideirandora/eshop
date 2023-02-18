@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: FontSize.large,
     color: Colors.primary,
-    marginVertical: Spacing * 3,
+    marginBottom: Spacing * 2,
     textTransform: 'uppercase',
     textAlign: 'center',
   },

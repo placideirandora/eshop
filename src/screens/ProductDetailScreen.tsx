@@ -66,7 +66,6 @@ const ProductDetailScreen: React.FC<Props> = ({route}) => {
 const styles = StyleSheet.create({
   productDetailView: {
     flex: 1,
-    padding: Spacing,
   },
   image: {
     width: '100%',
