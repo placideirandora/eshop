@@ -12,15 +12,15 @@ import {
   ImageBackground,
   Dimensions,
   StyleSheet,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
-import FontSize from '../constants/FontSize';
 import {apiBaseUrl} from '../constants/Api';
+import FontSize from '../constants/FontSize';
+import PrimaryButton from '../components/PrimaryButton';
 import CustomTextInput from '../components/CustomTextInput';
 import MissingFieldAlert from '../components/FieldErrorAlert';
 import {ProductCategory, RootStackParamList} from '../../types';
@@ -223,11 +223,11 @@ const AddProductScreen: React.FC<Props> = ({navigation: {navigate}}) => {
             />
           )}
           {!loading && (
-            <TouchableOpacity
-              style={styles.createButton}
-              onPress={() => validateFields()}>
-              <Text style={styles.createButtonText}>Create</Text>
-            </TouchableOpacity>
+            <PrimaryButton
+              title="Create"
+              handlePress={validateFields}
+              width="90%"
+            />
           )}
         </View>
       </ScrollView>
@@ -249,27 +249,6 @@ const styles = StyleSheet.create({
   form: {
     marginVertical: Spacing * 3,
     alignItems: 'center',
-  },
-  createButton: {
-    color: Colors.primary,
-    backgroundColor: Colors.primary,
-    paddingVertical: Spacing * 1.5,
-    paddingHorizontal: Spacing * 2,
-    width: '90%',
-    borderRadius: Spacing,
-    marginVertical: Spacing * 3,
-    shadowColor: Colors.primary,
-    shadowOffset: {
-      width: 0,
-      height: Spacing,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: Spacing,
-  },
-  createButtonText: {
-    fontSize: FontSize.large,
-    textAlign: 'center',
-    color: Colors.onPrimary,
   },
   dropDownTextStyles: {
     fontFamily: Fonts.regularMontSerrat,

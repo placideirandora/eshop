@@ -9,7 +9,6 @@ import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 
@@ -19,6 +18,8 @@ import Spacing from '../constants/Spacing';
 import {apiBaseUrl} from '../constants/Api';
 import FontSize from '../constants/FontSize';
 import {RootStackParamList} from '../../types';
+import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 import CustomTextInput from '../components/CustomTextInput';
 import MissingFieldAlert from '../components/FieldErrorAlert';
 
@@ -252,18 +253,15 @@ const SignUpScreen: React.FC<Props> = ({navigation: {navigate, reset}}) => {
           )}
           {!loading && (
             <>
-              <TouchableOpacity
-                style={styles.signUpButton}
-                onPress={() => validateFields()}>
-                <Text style={styles.signUpButtonText}>Create Account</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.signInButton}
-                onPress={() => navigate('SignIn')}>
-                <Text style={styles.signInButtonText}>
-                  Already have an account? Sign In
-                </Text>
-              </TouchableOpacity>
+              <PrimaryButton
+                title="Create Account"
+                width="90%"
+                handlePress={validateFields}
+              />
+              <SecondaryButton
+                title="Already have an account? Sign In"
+                handlePress={() => navigate('SignIn')}
+              />
             </>
           )}
         </View>
@@ -295,39 +293,6 @@ const styles = StyleSheet.create({
   form: {
     marginVertical: Spacing * 3,
     alignItems: 'center',
-  },
-  signUpButton: {
-    color: Colors.primary,
-    backgroundColor: Colors.primary,
-    paddingVertical: Spacing * 1.5,
-    paddingHorizontal: Spacing * 2,
-    width: '90%',
-    borderRadius: Spacing,
-    marginVertical: Spacing * 3,
-    shadowColor: Colors.primary,
-    shadowOffset: {
-      width: 0,
-      height: Spacing,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: Spacing,
-  },
-  signUpButtonText: {
-    fontSize: FontSize.large,
-    textAlign: 'center',
-    color: Colors.onPrimary,
-    fontFamily: Fonts.regularMontSerrat,
-  },
-  signInButton: {
-    paddingVertical: Spacing * 1.5,
-    paddingHorizontal: Spacing * 2,
-    borderRadius: Spacing,
-  },
-  signInButtonText: {
-    fontSize: FontSize.medium,
-    textAlign: 'center',
-    color: Colors.text,
-    fontFamily: Fonts.regularMontSerrat,
   },
   radioButtonsView: {
     display: 'flex',
